@@ -144,7 +144,8 @@ function getBook(id) {
 }
 
 // DESTRUCTING
-const book = getBook(1);
+/*
+const book = getBook(3);
 book;
 
 // const title = book.title;
@@ -207,9 +208,41 @@ console.log(book.translations.spanish);
 const spanishTranslation = book.translations.spanish || "not translated";
 spanishTranslation;
 
-console.log(book.reviews.librarything.reviewsCount);
-const countWrong = book.reviews.librarything.reviewsCount || "No data";
-countWrong;
+console.log(book.reviews.librarything?.reviewsCount);
+// const countWrong = book.reviews.librarything.reviewsCount || "No data";
+// countWrong;
 
-const count = book.reviews.librarything.reviewsCount ?? "no data";
-count;
+// const count = book.reviews.librarything.reviewsCount ?? "no data";
+// count;
+
+*/
+//OPTIONAL CHAINING
+function getTotalReviewCount(book) {
+  const goodread = book.reviews?.goodreads?.reviewsCount;
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+  librarything;
+  return goodread + librarything;
+}
+
+// console.log(getTotalReviewCount(book));
+
+// ARRAY MAP METHOD
+const books = getBooks();
+
+const x = [1, 2, 3, 4, 5].map((el) => el * 2);
+console.log(x);
+
+const titles = books.map((book) => book.title);
+titles;
+
+const essentialData = books.map((book) => ({
+  title: book.title,
+  author: book.author,
+  reviewsCount: getTotalReviewCount(book),
+}));
+
+essentialData;
+
+//FILTER METHOD
+const longBooks = books.filter((book) => book.pages > 500);
+longBooks;
