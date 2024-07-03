@@ -142,3 +142,74 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+// DESTRUCTING
+const book = getBook(1);
+book;
+
+// const title = book.title;
+// const author = book.author;
+
+const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
+  book;
+
+console.log(author, title, genres);
+
+// const primaryGenre = genres[0];
+// const secondaryGenre = genres[1];
+
+const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
+console.log(primaryGenre, secondaryGenre, otherGenres);
+
+const newGenres = [...genres, "epic"];
+newGenres;
+
+const updatedBook = {
+  ...book,
+  // ADDING A NEW PROPERTY
+  moviePublicationDate: "2001-12-19",
+  // OVERRIDING AN EXISTING PROPERTY
+  pages: 1210,
+};
+updatedBook;
+
+const getYear = (str) => str.split("-")[0];
+console.log(getYear(publicationDate));
+
+// TEMPLATE LITERALS
+const summary = `${title}, is a book with ${pages} pages and was written by ${author} and published in ${getYear(
+  publicationDate
+)}. The book has ${hasMovieAdaptation ? "" : "not"} been adpated to a movie.`;
+summary;
+
+//TERNARIES
+const pagesRange = pages > 1000 ? "over 1000" : "less than 1000";
+pagesRange;
+console.log(`THe book has ${pagesRange} pages`);
+
+// function getYear(str) {
+//   return str.split("-")[0];
+// }
+
+//SHORTCIRCUITING W/ LOGICAL OPERATORS
+console.log(true && "Some string");
+console.log(false && "Some string");
+console.log(hasMovieAdaptation && "This book has a movie.");
+
+//falsy; 0, '', null, undefined
+console.log("jonas" && "some String");
+console.log(0 && "some String");
+
+console.log(true || "some");
+console.log(false || "some");
+
+console.log(book.translations.spanish);
+const spanishTranslation = book.translations.spanish || "not translated";
+spanishTranslation;
+
+console.log(book.reviews.librarything.reviewsCount);
+const countWrong = book.reviews.librarything.reviewsCount || "No data";
+countWrong;
+
+const count = book.reviews.librarything.reviewsCount ?? "no data";
+count;
